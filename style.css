@@ -10,7 +10,9 @@
 }
 
 .green {
+  /*background: rgba(0, 255, 0, 0.5);*/
   background: green;
+  /*opacity: 0.5;*/
   width: 45%;
   height: 45%;
   position: absolute;
@@ -20,7 +22,9 @@
 }
 
 .red {
+  /*background: rgba(255, 0, 0, 0.5);*/
   background: red;
+  /*opacity: 0.5;*/
   width: 45%;
   height: 45%;
   position: absolute;
@@ -30,7 +34,9 @@
 }
 
 .yellow {
+  /*background: rgba(255, 255, 0, 0.5);*/
   background: gold;
+  /*opacity: 0.5;*/
   width: 45%;
   height: 45%;
   position: absolute;
@@ -40,7 +46,9 @@
 }
 
 .blue {
+  /*background: rgba(0, 0, 255, 0.5);*/
   background: blue;
+  /*opacity: 0.5;*/
   width: 45%;
   height: 45%;
   position: absolute;
@@ -83,6 +91,7 @@
   background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.25), rgba(255, 255, 255, 0) 100%);
   -webkit-filter: blur(10px);
   z-index: 50;
+  pointer-events: none;
 }
 
 .game:after {
@@ -96,6 +105,7 @@
   background: radial-gradient(circle at 80% 80%, rgba(255,255,255,0.25), rgba(255, 255, 255, 0) 100%);
   -webkit-filter: blur(10px);
   z-index: 50;
+  pointer-events: none;
 }
 
 .nameplate {
@@ -114,10 +124,19 @@
   background: #191919;
   position: absolute;
   top: 60%;
-  left: 20%;
+  left: 10%;
 }
+
+.start-border:before {
+  content: "Start";
+  position: relative;
+  top: -90%;
+  left: -10%;
+}
+
 .start-button {
   background: darkgoldenrod;
+  /*opacity: 0.5;*/
   width: 75%;
   height: 75%;
   border-radius: 50%;
@@ -133,7 +152,14 @@
   background: #191919;
   position: absolute;
   top: 60%;
-  right: 20%;
+  right: 10%;
+}
+
+.strict-border:before {
+  content: "Strict";
+  position: relative;
+  top: -90%;
+  left: -20%;
 }
 
 .strict-button {
@@ -141,6 +167,7 @@
   width: 75%;
   height: 75%;
   background: darkred;
+  /*opacity: 0.5;*/
   position: absolute;
   left: 12.5%;
   top: 12.5%;
@@ -159,4 +186,8 @@
   text-align: center;
   font-weight: bolder;
   font-size: 3em;
+}
+
+.dimmer {
+  opacity: 0.5;
 }

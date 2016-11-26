@@ -20,6 +20,7 @@ var Simon = function () {
 
   function changeState (state) {
     if (currentState) currentState.exit()
+    // console.log('Entering', state.name)
     currentState = state
     currentState.entry()
   }
@@ -45,23 +46,61 @@ var Simon = function () {
       case 'reset':
         turnCount = 0
         break
+      case 'none':
+        break // Just using this function to update the DOM
       default:
         console.log(type + ' is not a turnCount operator.')
     }
 
-    dom.countDisplay.innerText = turnCount
+    if (type !== 'reset') { // On reset, the dom will be flashing
+        dom.countDisplay.innerText = ('0' + turnCount).slice(-2)
+      }
   }
 
-  function flashPattern (pat) {
+  function flashDisplay (symbol, cb) {
+    // symbol will be flashed on the game screen.
+    // Use 'X' for a defeat and '!' for victory.
+    // The display will be left showing newVal if supplied, otherwise the previous value.
+
+    var show = dom.countDisplay
+
+    function flashOnce(count) {
+      // Show the win or loss symbol followed by a blank.
+      // This will only work in the context of the flashDisplay function.
+      if (count < 1) {
+        changeTurnCount('none')
+        if (cb) cb()
+      } else {
+        show.innerText = [symbol, symbol].join('')
+        setTimeout(() => {
+          show.innerText = ''
+          setTimeout(() => {
+            flashOnce(count-1)
+          }, flashTime)
+        }, flashTime)
+      }
+    }
+
+    flashOnce(2)
+  }
+
+  function newGame (win) {
+    console.log(win ? 'Victory' : 'Defeat')
+    pattern = []
+    changeTurnCount('reset')
+    flashDisplay(win ? '!' : 'X', () => {changeState(states.simonTurn)})
+  }
+
+  function flashPattern (cb, pat) {
     // Highlight the colours in order of the current pattern, if there is one
     tail = pat || pattern
     if (tail.length > 0) {
       flashButton(tail[0])
       setTimeout(() => {
-        flashPattern(tail.slice(1))
-      }, flashTime + 100)
+        flashPattern(cb, tail.slice(1))
+      }, flashTime * 1.5)
     } else {
-      return
+      if (cb) cb()
     }
   }
 
@@ -87,23 +126,20 @@ var Simon = function () {
       }
 
       return {
+        name: 'playerTurn',
         entry: function () {
           playerPattern = []
         },
         colourClick: function (evt) {
-          if (playerPattern.length < turnCount) {
-            flashButton(evt.target)
-            playerPattern.push(evt.target)
-          }
-          if (playerPattern.length === turnCount) {
-            var pass = patternCompare(playerPattern, pattern)
-            setTimeout(() => {
-              if (pass) {
-                changeState(states.simonTurn)
-              } else {
-                changeState(states.defeat) 
-              }  
-            }, flashTime + 250)
+          flashButton(evt.target)
+          playerPattern.push(evt.target)
+          var pass = patternCompare(playerPattern, pattern.slice(0, playerPattern.length))
+          if (!pass) {
+            changeState(states.defeat)
+          } else {
+            if (playerPattern.length === pattern.length) {
+              changeState(states.simonTurn)
+            }
           }
         },
         click: ef,
@@ -111,22 +147,27 @@ var Simon = function () {
       }
     }(),
     simonTurn: {
+      name: 'simonTurn',
       entry: function () {
-        changeTurnCount('add')
-        if (turnCount > maxTurns) {
+        if (turnCount >= maxTurns) {
           changeState(states.victory)
+        } else {
+          changeTurnCount('add')
+          pattern.push(getRandomColour())
+          setTimeout(() => {
+            flashPattern()
+          }, flashTime * 2)
+          changeState(states.playerTurn)
         }
-        pattern.push(getRandomColour())
-        flashPattern()
-        changeState(states.playerTurn)
       },
       click: ef,
       exit: ef,
       colourClick: ef
     },
     victory: {
+      name: 'victory',
       entry: function () {
-        console.log('victory')
+        newGame(true)
       },
       click: ef,
       exit: ef,
@@ -138,15 +179,20 @@ var Simon = function () {
       }
 
       return {
+        name: 'defeat',
         entry: function () {
           if (isStrict()) {
-            // TODO: Animate transition to new game
-            pattern = []
-            changeTurnCount('reset')
-            changeState(states.simonTurn)
+            newGame(false)
           } else {
-            flashPattern()
-            changeState(states.playerTurn)
+            flashDisplay ('X', () => {
+              flashPattern (() => {
+                changeState(states.playerTurn)
+              })
+            })
+            // setTimeout(() => {
+            //   flashPattern()
+            // }, flashTime * 2)
+            // changeState(states.playerTurn)
           }
         },
         exit: ef,

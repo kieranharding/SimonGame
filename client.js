@@ -31,7 +31,6 @@ var Simon = function () {
   ]
 
   function changeState (state) {
-    if (currentState) currentState.exit()
     // console.log('Entering', state.name)
     currentState = state
     currentState.entry()
@@ -153,9 +152,7 @@ var Simon = function () {
               changeState(states.simonTurn)
             }
           }
-        },
-        click: ef,
-        exit: ef
+        }
       }
     }(),
     simonTurn: {
@@ -172,8 +169,6 @@ var Simon = function () {
           changeState(states.playerTurn)
         }
       },
-      click: ef,
-      exit: ef,
       colourClick: ef
     },
     victory: {
@@ -181,8 +176,6 @@ var Simon = function () {
       entry: function () {
         newGame(true)
       },
-      click: ef,
-      exit: ef,
       colourClick: ef
     },
     defeat: function () {
@@ -207,9 +200,7 @@ var Simon = function () {
             // changeState(states.playerTurn)
           }
         },
-        exit: ef,
-        colourClick: ef,
-        click: ef
+        colourClick: ef
       }
     }()
   }

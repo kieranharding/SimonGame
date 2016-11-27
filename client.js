@@ -12,10 +12,22 @@ var Simon = function () {
   var currentState = null
   
   var colors = [
-    document.getElementsByClassName('red')[0],
-    document.getElementsByClassName('blue')[0],
-    document.getElementsByClassName('green')[0],
-    document.getElementsByClassName('yellow')[0]
+    {
+      el: document.getElementsByClassName('red')[0],
+      sound: new Audio('sounds/button1.mp3')
+    },
+    {
+      el: document.getElementsByClassName('blue')[0],
+      sound: new Audio('sounds/button2.mp3') 
+    },
+    {
+      el: document.getElementsByClassName('green')[0],
+      sound: new Audio('sounds/button3.mp3') 
+    },
+    {
+      el: document.getElementsByClassName('yellow')[0],
+      sound: new Audio('sounds/button4.mp3') 
+    }
   ]
 
   function changeState (state) {
@@ -106,8 +118,8 @@ var Simon = function () {
 
   this.init = function () {
       changeState(states.simonTurn)
-      colors.forEach(function (x) {
-        x.addEventListener('click', currentState.colourClick, false)
+      colors.forEach((x) => {
+        x.el.addEventListener('click', currentState.colourClick, false)
       })
   }
 
@@ -131,9 +143,9 @@ var Simon = function () {
           playerPattern = []
         },
         colourClick: function (evt) {
-          flashButton(evt.target)
+          flashButton(colors.filter((col) => {return (col.el === evt.target)})[0])
           playerPattern.push(evt.target)
-          var pass = patternCompare(playerPattern, pattern.slice(0, playerPattern.length))
+          var pass = patternCompare(playerPattern, pattern.slice(0, playerPattern.length).map((col) => {return col.el}))
           if (!pass) {
             changeState(states.defeat)
           } else {
@@ -204,11 +216,12 @@ var Simon = function () {
 }
 
 function flashButton (button, cb) {
-  // Button is a dom element that has opacity 0.5 as a base state.
-  button.style.opacity = flashOpacity
+  // el is a dom element that has opacity 0.5 as a base state.
+  var el = button.el || button
+  el.style.opacity = flashOpacity
+  if (button.sound) button.sound.play()
   setTimeout(() => {
-    button.style.opacity = baseOpacity
-    // TODO: Play sound when flashing colours
+    el.style.opacity = baseOpacity
     if (cb) cb()
   }, flashTime)
 }

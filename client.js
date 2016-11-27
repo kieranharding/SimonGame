@@ -96,6 +96,7 @@ var Simon = function () {
   }
 
   function newGame (win) {
+    // Now that the init method does the same thing, this needs a different name
     console.log(win ? 'Victory' : 'Defeat')
     pattern = []
     changeTurnCount('reset')
@@ -116,13 +117,20 @@ var Simon = function () {
   }
 
   this.init = function () {
-      changeState(states.simonTurn)
-      colors.forEach((x) => {
-        x.el.addEventListener('click', currentState.colourClick, false)
-      })
+    changeTurnCount('reset')
+    pattern = []
+    changeState(states.simonTurn)
+    colors.forEach((x) => {
+      x.el.addEventListener('click', currentState.colourClick, false)
+    })
+
   }
 
   var states = {
+    setup: {
+      colourClick: ef,
+      entry: ef
+    },
     playerTurn: function () {
       var playerPattern
 
@@ -232,15 +240,18 @@ function run () {
     countDisplay: document.getElementsByClassName('count')[0]
   }
 
-  dom['startButton'].addEventListener('click', (evt) => {
-    flashButton(dom['startButton'], () => {
-      var game = new Simon()
-      game.init()
-    })
-  })
-
   dom['strictButton'].addEventListener('click', (evt) => {
     toggleClass(evt.target, 'dimmer')
+  })
+
+  // Start a game immediately.
+  var game = new Simon()
+
+  dom['startButton'].addEventListener('click', (evt) => {
+    flashButton(dom['startButton'], () => {
+      // newGame(false)
+      game.init()
+    })
   })
 }
 
@@ -252,4 +263,3 @@ else if (document.addEventListener) document.addEventListener('DOMContentLoaded'
 else document.attachEvent('onreadystatechange', function () {
   if (document.readyState === 'complete') run()
 })
-

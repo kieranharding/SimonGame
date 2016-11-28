@@ -1,10 +1,7 @@
 .game {
-  margin: 50px auto;
-/*   width: 40%;
-  max-width: 960px; */
-  max-height: 450px;
-  max-width: 450px;
-  padding: 40%;
+  margin: 5vmin auto;
+  width: 90vmin;
+  height: 90vmin;
   box-sizing: border-box;
   background: #191919;
   border-radius: 50%;
@@ -117,7 +114,7 @@
   margin: 15%;
   font-weight: bolder;
   font-size: 3em;
-  font-size: 7vw;
+  font-size: 7vmin;
   font-family: fantasy;
 }
 
@@ -136,7 +133,7 @@
   position: relative;
   top: -90%;
   left: -10%;
-  font-size: 2.5vw;
+  font-size: 2.5vmin;
 }
 
 .start-button {
@@ -165,7 +162,7 @@
   position: relative;
   top: -90%;
   left: -20%;
-  font-size: 2.5vw;
+  font-size: 2.5vmin;
 }
 
 .strict-button {
@@ -181,9 +178,9 @@
 
 .count {
   width: 30%;
-  width: 11vw;
+  width: 11vmin;
   height: 20%;
-  height: 7vw;
+  height: 7vmin;
   border: solid #bd0000 5px;
   border-radius: 10px;
   background: #1e0000;
@@ -194,7 +191,7 @@
   text-align: center;
   font-weight: bolder;
   font-size: 3em;
-  font-size: 5vw;
+  font-size: 5vmin;
 }
 
 .dimmer {

@@ -2,7 +2,7 @@
 var baseOpacity = 0.5 // Should match opacity of .dimmer in style.css
 var flashOpacity = 1
 var flashTime = 400
-var maxTurns = 5 // Assignment requires 20
+var maxTurns = 20 // Assignment requires 20
 
 var dom 
 
@@ -31,7 +31,6 @@ var Simon = function () {
   ]
 
   function changeState (state) {
-    // console.log('Entering', state.name)
     currentState = state
     currentState.entry()
   }
@@ -71,7 +70,6 @@ var Simon = function () {
   function flashDisplay (symbol, cb) {
     // symbol will be flashed on the game screen.
     // Use 'X' for a defeat and '!' for victory.
-    // The display will be left showing newVal if supplied, otherwise the previous value.
 
     var show = dom.countDisplay
 
@@ -95,8 +93,7 @@ var Simon = function () {
     flashOnce(2)
   }
 
-  function newGame (win) {
-    // Now that the init method does the same thing, this needs a different name
+  function endGame (win) {
     console.log(win ? 'Victory' : 'Defeat')
     pattern = []
     changeTurnCount('reset')
@@ -182,7 +179,7 @@ var Simon = function () {
     victory: {
       name: 'victory',
       entry: function () {
-        newGame(true)
+        endGame(true)
       },
       colourClick: ef
     },
@@ -195,17 +192,13 @@ var Simon = function () {
         name: 'defeat',
         entry: function () {
           if (isStrict()) {
-            newGame(false)
+            endGame(false)
           } else {
             flashDisplay ('X', () => {
               flashPattern (() => {
                 changeState(states.playerTurn)
               })
             })
-            // setTimeout(() => {
-            //   flashPattern()
-            // }, flashTime * 2)
-            // changeState(states.playerTurn)
           }
         },
         colourClick: ef
@@ -216,6 +209,7 @@ var Simon = function () {
 
 function flashButton (button, cb) {
   // el is a dom element that has opacity 0.5 as a base state.
+  // TODO: I added a dimmer class for the strict button, it would be better to use that here.
   var el = button.el || button
   el.style.opacity = flashOpacity
   if (button.sound) button.sound.play()

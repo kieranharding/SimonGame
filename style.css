@@ -1,6 +1,9 @@
 .game {
   margin: 50px auto;
-  width: 40%;
+/*   width: 40%;
+  max-width: 960px; */
+  max-height: 450px;
+  max-width: 450px;
   padding: 40%;
   box-sizing: border-box;
   background: #191919;

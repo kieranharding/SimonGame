@@ -197,3 +197,9 @@
 .dimmer {
   opacity: 0.5;
 }
+
+.code {
+  position: relative;
+  float: right;
+  padding-right: 1em;
+}

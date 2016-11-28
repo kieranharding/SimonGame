@@ -227,6 +227,7 @@ function toggleClass(el, className) {
   }
 }
 
+// This startup concept taken from https://plainjs.com/javascript/events/running-code-when-the-document-is-ready-15/
 function run () {
   dom = {
     startButton: document.getElementById('start-button'),

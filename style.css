@@ -91,7 +91,7 @@
   width: 92%;
   height: 92%;
   border-radius: 50%;
-  background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.25), rgba(255, 255, 255, 0) 100%);
+  background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.15), rgba(255, 255, 255, 0) 100%);
   -webkit-filter: blur(10px);
   z-index: 50;
   pointer-events: none;
@@ -105,7 +105,7 @@
   width: 92%;
   height: 92%;
   border-radius: 50%;
-  background: radial-gradient(circle at 80% 80%, rgba(255,255,255,0.22), rgba(255, 255, 255, 0) 100%);
+  background: radial-gradient(circle at 80% 80%, rgba(255,255,255,0.15), rgba(255, 255, 255, 0) 100%);
   -webkit-filter: blur(10px);
   z-index: 50;
   pointer-events: none;
@@ -140,7 +140,7 @@
 }
 
 .start-button {
-  background: darkgoldenrod;
+  background: goldenrod;
   /*opacity: 0.5;*/
   width: 75%;
   height: 75%;
@@ -172,7 +172,7 @@
   border-radius: 50%;
   width: 75%;
   height: 75%;
-  background: darkred;
+  background: red;
   /*opacity: 0.5;*/
   position: absolute;
   left: 12.5%;

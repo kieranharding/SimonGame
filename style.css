@@ -70,6 +70,7 @@
 
 .console {
   background: #cbcbcb;
+  background: -webkit-linear-gradient( top, black 45%, #cbcbcb 46%);
   background: linear-gradient( to bottom, black 45%, #cbcbcb 46%);
   width: 90%;
   height: 90%;
@@ -88,8 +89,10 @@
   width: 92%;
   height: 92%;
   border-radius: 50%;
+  background: -webkit-radial-gradient(20% 20%, circle, rgba(255,255,255,0.15), rgba(255, 255, 255, 0) 100%);
   background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.15), rgba(255, 255, 255, 0) 100%);
   -webkit-filter: blur(10px);
+  filter: blur(10px);
   z-index: 50;
   pointer-events: none;
 }
@@ -102,8 +105,10 @@
   width: 92%;
   height: 92%;
   border-radius: 50%;
+  background: -webkit-radial-gradient(80% 80%, circle, rgba(255,255,255,0.15), rgba(255, 255, 255, 0) 100%);
   background: radial-gradient(circle at 80% 80%, rgba(255,255,255,0.15), rgba(255, 255, 255, 0) 100%);
   -webkit-filter: blur(10px);
+  filter: blur(10px);
   z-index: 50;
   pointer-events: none;
 }
